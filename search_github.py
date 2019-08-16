@@ -18,13 +18,18 @@ class SearchRepo:
 
             page = 1
             while True:
-                response = requests.get(
-                    'https://api.github.com/search/repositories',
-                    params={'q': f'{keyword}',
-                            'page': page,
-                            'per_page': 100
-                            },
-                )
+                response = None
+                try:
+                    response = requests.get(
+                        'https://api.github.com/search/repositories',
+                        params={'q': f'{keyword}',
+                                'page': page,
+                                'per_page': 100
+                                },
+                    )
+                except Exception as e:
+                    print(e)
+                    exit()
 
                 # Check if the status of the response did not succeed and break the loop
                 if response.status_code != 200:
